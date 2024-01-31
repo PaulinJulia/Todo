@@ -3,4 +3,70 @@
   padding: 0;
   font-family: sans-serif;
 }
+body {
+  background-color: gainsboro;
+}
 
+h1 {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+.add-todos-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.all-todos {
+  background-color: rgb(210, 213, 225);
+}
+.todo-list {
+  list-style: none;
+  padding: 1rem;
+  margin: 1.5rem;
+  background-color: rgb(181, 192, 234);
+  box-shadow: 2px 2px 2px 2px rgb(174, 172, 172);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 250px;
+  height: 30px;
+}
+#checkbox {
+  background-color: azure;
+  width: 20px;
+  height: 20px;
+}
+.checkBoxIcon {
+  color: brown;
+}
+.todoText {
+  padding: 0rem 1rem 0rem 1rem;
+}
+[contenteditable="true"] {
+  outline: none;
+}
+
+.delete-all-form {
+  width: 300px;
+  height: 120px;
+  background-color: rgb(164, 160, 155);
+  position: absolute;
+  left: 10%;
+  top: 50%;
+}
+.delete-all-form > p {
+  padding: 1rem;
+}
+#cancel-form,
+#delete-all-button {
+  padding: 0.2rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
