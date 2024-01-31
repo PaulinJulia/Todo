@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="dist/index.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Todo-list</title>
+  </head>
+  <body>
+    <header>
+      <h1>Todo-list</h1>
+    </header>
+    <main>
+      <form>
+        <label for="todo"></label>
+        <input
+          type="text"
+          id="todo-input"
+          placeholder="Add a Todo..."
+          name="todo"
+        />
+        <button type="button" id="submit-todo-button">Add</button>
+      </form>
+      <section class="todo-container">
+        <ul class="all-todos">
+        </ul>
+      </section>
+      <form class="delete-all-form">
+        <div>Do you want to delete all Todos from the list?</div>
+        <button type="button" id="cancel-form">Cancel</button>
+        <button type="submit" id="delete-all-button">Delete all</button>
+      </form>
+    </main>
+  </body>
+</html>
