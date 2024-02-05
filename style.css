@@ -11,6 +11,7 @@ h1 {
   display: flex;
   justify-content: space-evenly;
   padding: 1rem;
+  margin-top: 2rem;
 }
 .add-todos-form {
   display: flex;
@@ -34,6 +35,18 @@ h1 {
   height: 30px;
 }
 
+.bx {
+  font-size: 30px;
+}
+
+.remove-todo-button,
+.edit-todo-button,
+#submit-todo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .todoText {
   padding: 0rem 1rem 0rem 1rem;
 }
@@ -42,18 +55,27 @@ h1 {
 }
 
 .delete-all-form {
-  width: 300px;
-  height: 120px;
+  display: none;
+  width: 350px;
+  height: 150px;
   background-color: rgb(164, 160, 155);
   position: absolute;
-  left: 10%;
-  top: 50%;
+  left: 25%;
+  top: 25%;
 }
-.delete-all-form > p {
-  padding: 1rem;
+.form-wrapper > p {
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
 }
-#cancel-form,
-#delete-all-button {
+.button-wrapper {
+padding: 1rem;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+}
+
+#cancel-form-button,
+#delete-all {
   padding: 0.2rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;

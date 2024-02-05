@@ -14,6 +14,7 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
-    "boxicons": "^2.1.4"
+    "boxicons": "^2.1.4",
+    "uuid": "^9.0.1"
   }
 }
