@@ -1,3 +1,5 @@
+//import { v4 as uuidv4 } from "uuid";
+
 const addTodo = document.querySelector(
   "#submit-todo-button"
 ) as HTMLButtonElement;
@@ -25,7 +27,7 @@ type Todo = {
   textDecoration: boolean;
 };
 
-const todoListArray: Todo[] = [];
+let todoListArray: Todo[] = [];
 
 //Display Todos
 async function displayTodos(todoListArray: Todo[]) {
@@ -43,7 +45,7 @@ async function displayTodos(todoListArray: Todo[]) {
                 <i class="check bx ${checkboxClass}" data-checkbox-id="${todo.id}"></i>
                 <div class="todoText" style="text-decoration: ${textDecorationClass};" data-edit-id="${todo.id}" contenteditable="true">${todo.title}</div>
                 <div>
-                <i class="edit bx bx-edit""></i>
+                <i class="edit bx bx-edit" data-edit-button-id="${todo.id}"></i>
                 <i class="remove bx bx-trash-alt" data-remove-id="${todo.id}"></i>
                 </div>
               </li>`;
@@ -96,6 +98,21 @@ document.addEventListener("click", function (e: MouseEvent) {
   }
 });
 
+//Edit text on todo
+/* document.addEventListener("click", function (e: MouseEvent) {
+  if ((e.target as HTMLElement).classList.contains("edit")) {
+    const id = (e.target as HTMLElement).getAttribute("data-edit-button-id");
+    console.log("klick");
+  
+    const findTodo  = todoListArray.find(todo) => todo.id === parseInt(id);
+
+      todoListArray[findTodo] = { ...todoListArray[findTodo], title: todo.title}
+    };
+      localStorage.setItem("todoData", JSON.stringify(todoListArray));
+            
+}) */
+
+
 //Display lagrade todos
 let storedTodos = localStorage.getItem("todoData");
 if (storedTodos) {
@@ -108,18 +125,15 @@ if (storedTodos) {
 document.addEventListener("click", (e: Event) => {
   if ((e.target as HTMLElement).classList.contains("remove")) {
     const id = (e.target as HTMLElement).getAttribute("data-remove-id");
-    let todosListArray: Todo[] = JSON.parse(
-      localStorage.getItem("todoData") || "[]"
+    todoListArray = todoListArray.filter(
+      (todo: Todo) => todo.id !== parseInt(id)
     );
-    if (todosListArray) {
-      todoListArray.splice(id, 1);
-      let len = todoListArray.length;
-      for (let i = 0; i < len; i++) {
-        todoListArray[i].id = i;
-      }
-      localStorage.setItem("todoData", JSON.stringify(todoListArray));
-      displayTodos(todoListArray);
+    let len = todoListArray.length;
+    for (let i = 0; i < len; i++) {
+      todoListArray[i].id = i;
     }
+    localStorage.setItem("todoData", JSON.stringify(todoListArray));
+    displayTodos(todoListArray);
   }
 });
 
