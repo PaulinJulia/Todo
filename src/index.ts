@@ -1,14 +1,11 @@
-//import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
+import "boxicons";
 
 const addTodo = document.querySelector(
   "#submit-todo-button"
 ) as HTMLButtonElement;
 const allTodos = document.querySelector(".all-todos") as HTMLUListElement;
 const todoInput = document.querySelector("#todo-input") as HTMLInputElement;
-const todoText = document.querySelector("#todoText") as HTMLDivElement;
-const removeTodoButton = document.querySelector(
-  ".remove-todo-button"
-) as HTMLButtonElement;
 const deleteAllButton = document.querySelector(
   ".delete-all-button"
 ) as HTMLButtonElement;
@@ -21,7 +18,7 @@ const cancelFormButton = document.querySelector(
 ) as HTMLButtonElement;
 
 type Todo = {
-  id: number;
+  id: string;
   title: string;
   checkbox: boolean;
   textDecoration: boolean;
@@ -58,7 +55,7 @@ async function displayTodos(todoListArray: Todo[]) {
 //Add todo to list and store in localstorage
 const addToList = (todoInput: HTMLInputElement) => {
   const todo: Todo = {
-    id: todoListArray.length,
+    id: uuidv4(),
     title: todoInput.value,
     checkbox: false,
     textDecoration: false,
@@ -75,7 +72,7 @@ addTodo.addEventListener("click", () => addToList(todoInput));
 document.addEventListener("click", function (e: MouseEvent) {
   if ((e.target as HTMLElement).classList.contains("check")) {
     const id = (e.target as HTMLElement).getAttribute("data-checkbox-id");
-    const todo = todoListArray.find((todo) => todo.id === parseInt(id));
+    const todo = todoListArray.find((todo) => todo.id === id);
     if (todo) {
       todo.checkbox = !todo.checkbox;
 
@@ -104,14 +101,13 @@ document.addEventListener("click", function (e: MouseEvent) {
     const id = (e.target as HTMLElement).getAttribute("data-edit-button-id");
     console.log("klick");
   
-    const findTodo  = todoListArray.find(todo) => todo.id === parseInt(id);
+    const findTodo  = todoListArray.find(todo) => todo.id === (id);
 
       todoListArray[findTodo] = { ...todoListArray[findTodo], title: todo.title}
     };
       localStorage.setItem("todoData", JSON.stringify(todoListArray));
             
 }) */
-
 
 //Display lagrade todos
 let storedTodos = localStorage.getItem("todoData");
@@ -125,13 +121,7 @@ if (storedTodos) {
 document.addEventListener("click", (e: Event) => {
   if ((e.target as HTMLElement).classList.contains("remove")) {
     const id = (e.target as HTMLElement).getAttribute("data-remove-id");
-    todoListArray = todoListArray.filter(
-      (todo: Todo) => todo.id !== parseInt(id)
-    );
-    let len = todoListArray.length;
-    for (let i = 0; i < len; i++) {
-      todoListArray[i].id = i;
-    }
+    todoListArray = todoListArray.filter((todo: Todo) => todo.id !== id);
     localStorage.setItem("todoData", JSON.stringify(todoListArray));
     displayTodos(todoListArray);
   }
