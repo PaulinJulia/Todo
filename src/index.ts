@@ -15,7 +15,8 @@ const deleteAll = document.querySelector("#delete-all") as HTMLButtonElement;
 const cancelFormButton = document.querySelector(
   "#cancel-form-button"
 ) as HTMLButtonElement;
-const editableText = document.querySelector("#editableText") as HTMLElement;
+const sortButton = document.querySelector("#sort-button") as HTMLButtonElement;
+const sortIcon = document.querySelector("#sort-icon") as HTMLButtonElement;
 
 todoInput.addEventListener("keypress", (e) => {
   if (e.key == "Enter") {
@@ -45,11 +46,11 @@ async function displayTodos(todoListArray: Todo[]) {
       }
       return `
               <li class="todo-list">
-                <i class="check bx ${checkboxClass}" data-checkbox-id="${todo.id}"></i>
-                <div class="todoText" id="editableText" style="text-decoration: ${textDecorationClass};" data-edit-id="${todo.id}" contenteditable="true">${todo.title}</div>
-                <div>
-                <i class="edit bx bx-edit" data-edit-button-id="${todo.id}"></i>
-                <i class="remove bx bx-trash-alt" data-remove-id="${todo.id}"></i>
+                <i class="check bx ${checkboxClass}" title="done" data-checkbox-id="${todo.id}"></i>
+                <div class="todoText" id="editableText" style="text-decoration: ${textDecorationClass};" data-edit-id="${todo.id}">${todo.title}</div>
+                <div class="button-wrapper">
+                  <i class="edit bx bx-edit" title="edit" data-edit-button-id="${todo.id}"></i>
+                  <i class="remove bx bx-trash-alt" title="remove" data-remove-id="${todo.id}"></i>
                 </div>
               </li>`;
     })
@@ -105,14 +106,6 @@ document.addEventListener("click", function (e: MouseEvent) {
   }
 });
 
-//Display lagrade todos
-let storedTodos = localStorage.getItem("todoData");
-if (storedTodos) {
-  const todoDataArray = JSON.parse(storedTodos);
-  todoListArray.push(...todoDataArray);
-  displayTodos(todoListArray);
-}
-
 //Edit text on todo
 document.addEventListener("click", function (e: MouseEvent) {
   if ((e.target as HTMLElement).classList.contains("edit")) {
@@ -139,6 +132,14 @@ document.addEventListener("click", function (e: MouseEvent) {
   }
 });
 
+//Display lagrade todos
+let storedTodos = localStorage.getItem("todoData");
+if (storedTodos) {
+  const todoDataArray = JSON.parse(storedTodos);
+  todoListArray.push(...todoDataArray);
+  displayTodos(todoListArray);
+}
+
 //REMOVE a TODO
 document.addEventListener("click", (e: Event) => {
   if ((e.target as HTMLElement).classList.contains("remove")) {
@@ -146,6 +147,28 @@ document.addEventListener("click", (e: Event) => {
     todoListArray = todoListArray.filter((todo: Todo) => todo.id !== id);
     localStorage.setItem("todoData", JSON.stringify(todoListArray));
     displayTodos(todoListArray);
+  }
+});
+
+//Sort by alphabetical order
+const sortList = todoListArray.sort((a, b) => (a.title > b.title ? 1 : -1));
+let sortDirection: number = 1;
+
+sortButton.addEventListener("click", () => {
+  if (sortDirection === 1) {
+    sortIcon.classList.remove("bx-sort-z-a");
+    sortIcon.classList.add("bx-sort-a-z");
+    sortDirection = 0;
+    displayTodos(sortList);
+  } else {
+    sortDirection = 1;
+    sortIcon.classList.remove("bx-sort-a-z");
+    sortIcon.classList.add("bx-sort-z-a");
+    let storedTodos = localStorage.getItem("todoData");
+    if (storedTodos) {
+      todoListArray = JSON.parse(storedTodos);
+      displayTodos(todoListArray);
+    }
   }
 });
 

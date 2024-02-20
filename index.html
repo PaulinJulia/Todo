@@ -17,12 +17,22 @@
     </header>
     <main>
       <form class="add-todos-form">
+        <i class="delete-all-button bx bxs-trash" title="delete all"></i>
         <label for="todo"></label>
-        <input type="text" id="todo-input" placeholder="Todo..." name="todo" />
-        <button type="button" id="submit-todo-button">
+        <input
+          type="text"
+          id="todo-input"
+          placeholder="Add todo..."
+          name="todo"
+          title="text"
+          maxlength="24"
+        />
+        <button type="button" title="add" id="submit-todo-button">
           <i class="bx bx-plus"></i>
         </button>
-        <i class="delete-all-button bx bxs-trash"></i>
+                <button type="button" title="A-Z" id="sort-button">
+          <i id="sort-icon" class='bx bx-sort-z-a' ></i>
+        </button>
       </form>
       <section class="todo-container">
         <ul class="all-todos"></ul>
