@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import "boxicons";
 
 const addTodo = document.querySelector(
   "#submit-todo-button"
@@ -16,6 +15,13 @@ const deleteAll = document.querySelector("#delete-all") as HTMLButtonElement;
 const cancelFormButton = document.querySelector(
   "#cancel-form-button"
 ) as HTMLButtonElement;
+const editableText = document.querySelector("#editableText") as HTMLElement;
+
+todoInput.addEventListener("keypress", (e) => {
+  if (e.key == "Enter") {
+    addToList(todoInput);
+  }
+});
 
 type Todo = {
   id: string;
@@ -40,7 +46,7 @@ async function displayTodos(todoListArray: Todo[]) {
       return `
               <li class="todo-list">
                 <i class="check bx ${checkboxClass}" data-checkbox-id="${todo.id}"></i>
-                <div class="todoText" style="text-decoration: ${textDecorationClass};" data-edit-id="${todo.id}" contenteditable="true">${todo.title}</div>
+                <div class="todoText" id="editableText" style="text-decoration: ${textDecorationClass};" data-edit-id="${todo.id}" contenteditable="true">${todo.title}</div>
                 <div>
                 <i class="edit bx bx-edit" data-edit-button-id="${todo.id}"></i>
                 <i class="remove bx bx-trash-alt" data-remove-id="${todo.id}"></i>
@@ -54,16 +60,20 @@ async function displayTodos(todoListArray: Todo[]) {
 
 //Add todo to list and store in localstorage
 const addToList = (todoInput: HTMLInputElement) => {
-  const todo: Todo = {
-    id: uuidv4(),
-    title: todoInput.value,
-    checkbox: false,
-    textDecoration: false,
-  };
-  todoListArray.push(todo);
+  if (todoInput.value === "") {
+    alert("Your must write somthing!");
+  } else {
+    const todo: Todo = {
+      id: uuidv4(),
+      title: todoInput.value,
+      checkbox: false,
+      textDecoration: false,
+    };
+    todoListArray.push(todo);
 
-  localStorage.setItem("todoData", JSON.stringify(todoListArray));
-  displayTodos(todoListArray);
+    localStorage.setItem("todoData", JSON.stringify(todoListArray));
+    displayTodos(todoListArray);
+  }
 };
 
 addTodo.addEventListener("click", () => addToList(todoInput));
@@ -95,20 +105,6 @@ document.addEventListener("click", function (e: MouseEvent) {
   }
 });
 
-//Edit text on todo
-/* document.addEventListener("click", function (e: MouseEvent) {
-  if ((e.target as HTMLElement).classList.contains("edit")) {
-    const id = (e.target as HTMLElement).getAttribute("data-edit-button-id");
-    console.log("klick");
-  
-    const findTodo  = todoListArray.find(todo) => todo.id === (id);
-
-      todoListArray[findTodo] = { ...todoListArray[findTodo], title: todo.title}
-    };
-      localStorage.setItem("todoData", JSON.stringify(todoListArray));
-            
-}) */
-
 //Display lagrade todos
 let storedTodos = localStorage.getItem("todoData");
 if (storedTodos) {
@@ -116,6 +112,32 @@ if (storedTodos) {
   todoListArray.push(...todoDataArray);
   displayTodos(todoListArray);
 }
+
+//Edit text on todo
+document.addEventListener("click", function (e: MouseEvent) {
+  if ((e.target as HTMLElement).classList.contains("edit")) {
+    const id = (e.target as HTMLElement).getAttribute("data-edit-button-id");
+    const findTodo = todoListArray.find((todo) => todo.id === id);
+    if (findTodo) {
+      const editableText = document.querySelector(
+        `[data-edit-id="${id}"]`
+      ) as HTMLElement;
+      editableText.contentEditable = "true";
+      editableText.focus();
+
+      editableText.addEventListener("blur", () => {
+        const updatedTitle = editableText.textContent?.trim() || "";
+        if (findTodo) {
+          findTodo.title = updatedTitle;
+          const updTodoList = JSON.stringify(todoListArray) as string;
+          localStorage.setItem("todoData", updTodoList);
+        } else {
+          console.error("Todo not found");
+        }
+      });
+    }
+  }
+});
 
 //REMOVE a TODO
 document.addEventListener("click", (e: Event) => {

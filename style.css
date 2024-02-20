@@ -4,7 +4,10 @@
   font-family: sans-serif;
 }
 body {
-  background-color: gainsboro;
+  background-image: url(images/ocean.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
 }
 
 h1 {
