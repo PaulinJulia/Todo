@@ -6,17 +6,17 @@ https://github.com/PaulinJulia/Todo
 
 ## Description
 
-This project is a Todo-list. 
+This project is a Todo-list.
 
 This task tests the knowledge and ability to develop functionality on websites through Typescript as well as developing web interfaces in HTML and CSS. The project have also used node,js, npm, vite, uuid and icons from Boxicons.
 
 In this project, you can add todos in the list, check the checkbox, and make it done or uncheck. With a click on the A-Z button, you can see all of your todos in alphabetical order. It is also possible to revise the text content on the todo and if you would like to remove one todo you can do that by clicking on the trash bin on the task. It is also possible to clear the whole list of tasks.
 
-
 ## Strengths and weaknesses
 
-This project's strengths
-input
+This project's strength should be that it is written in typescript. However, I have not yet understood the advantages of typescript. But this is also my first project in typescript so I'm sure I'll see the benefits in time.
+This project has many improvement opportunities, for example, the text on the task could be an input element instead of a div for easier manipulation of the text. I think the code could be more concise and simplified, by creating more reusable functions. With myself, I see development opportunities in gaining a better understanding of each element's position for a nicer design.  
+For me, this project has been educational by working with arrays, higher-order functions, finding an object with an id and revising it. I have also gained a greater understanding of loops and if-statements.
 
 ## Visuals
 
